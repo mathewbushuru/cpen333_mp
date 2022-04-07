@@ -1,3 +1,8 @@
+# Currently working on
+## Mathew 
+- socket stuff from slides
+## Aarushi
+
 # part 1
 ## Already done
 - 
