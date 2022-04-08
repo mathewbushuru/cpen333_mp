@@ -8,11 +8,18 @@
 - 
 
 ## To Do
-- Game class' superloop method(the main loop)
-- Game class' calculateNewCoordinates method (implement before doing move)
-- Game class' move method
-- Game class' isGameOver method
-- Game class' createNewPrey method
+### Game class' superloop method(the main loop)
+
+### GGame class' calculateNewCoordinates method (implement before doing move)
+DONE
+
+### GGame class' move method
+
+
+### GGame class' isGameOver method
+
+### GGame class' createNewPrey method
+DONE
 
 
 # part 2

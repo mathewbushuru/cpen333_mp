@@ -2,6 +2,7 @@
 # Name:             Mathew Bushuru
 # Student number:   81262800
 
+# TODO: add details
 # Student 2
 # Name:
 # Student number:
@@ -136,6 +137,7 @@ class Game:
         self.direction = "Left"
         self.gameNotOver = True
         self.createNewPrey()
+        self.prey_coordinates  # TODO: CREATED THIS NEW DATA FIELD NOT SURE IF ITS RIGHT
 
     def superloop(self) -> None:
         """
@@ -147,7 +149,7 @@ class Game:
         """
         SPEED = 0.15  # speed of snake updates (sec)
         while self.gameNotOver:
-            # complete the method implementation below
+            # TODO: complete the method implementation below
             pass  # remove this line from your implemenation
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
@@ -187,7 +189,27 @@ class Game:
         and position) should be correctly updated.
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
-        # complete the method implementation below
+        if (self.direction == "Left" and self.prey_coordinates[2] == self.snakeCoordinates[0][0]):
+            gameQueue.put({"score": self.score + 1})
+            self.createNewPrey()
+        elif (self.direction == "Right" and self.prey_coordinates[0] == self.snakeCoordinates[0][0]):
+            gameQueue.put({"score": self.score + 1})
+            self.createNewPrey()
+        elif (self.direction == "Up" and self.prey_coordinates[3] == self.snakeCoordinates[0][0]):
+            gameQueue.put({"score": self.score + 1})
+            self.createNewPrey()
+        elif (self.direction == "Down" and self.prey_coordinates[1] == self.snakeCoordinates[0][0]):
+            gameQueue.put({"score": self.score + 1})
+            self.createNewPrey()
+        else:
+            return
+
+        self.isGameOver(NewSnakeCoordinates)
+        self.snakeCoordinates.append()
+
+        # TODO: generate new snake coord, if prey captured, add task to the queue for updated score and create
+        # TODO: a new prey, check if game should be over
+        #  complete the method implementation below
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -199,7 +221,25 @@ class Game:
         It is used by the move() method.
         """
         lastX, lastY = self.snakeCoordinates[-1]
-        # complete the method implementation below
+
+        # TODO: complete the method implementation below
+        currentDirection = self.direction
+        if currentDirection == "Left":
+            newX = lastX - 5
+            newY = lastY
+        elif currentDirection == "Right":
+            newX = lastX + 5
+            newY = lastY
+        elif currentDirection == "Up":
+            newX = lastX
+            newY = lastY - 5
+        elif currentDirection == "Down":
+            newX = lastX
+            newY = lastY + 5
+        else:
+            return
+
+        return (newX, newY)
 
     def isGameOver(self, snakeCoordinates) -> None:
         """
@@ -210,7 +250,8 @@ class Game:
         field and also adds a "game_over" task to the queue.
         """
         x, y = snakeCoordinates
-        # complete the method implementation below
+        # TODO: complete the method implementation below
+        # if self.snakeCoordinates[0]
 
     def createNewPrey(self) -> None:
         """
@@ -224,7 +265,12 @@ class Game:
         away from the walls.
         """
         THRESHOLD = 15  # sets how close prey can be to borders
-        # complete the method implementation below
+        # DONE: complete the method implementation below
+        x = random.randrange(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
+        y = random.randrange(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
+        self.prey_coordinates = (x - 5, y - 5, x + 5, y + 5)
+        print(self.prey_coordinates)
+        gameQueue.put({"prey": self.prey_coordinates})
 
 
 if __name__ == "__main__":
