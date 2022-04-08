@@ -196,34 +196,14 @@ class Game:
         self.snakeCoordinates.append(newSnakeCoordinates)
         self.snakeCoordinates.pop(0)
 
-        print("SNAKE top:", self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH), "\n")
-        print("SNAKE BOTTOM: ", self.snakeCoordinates[-1][1],"\n" )
-        print("PREY:", self.prey_coordinates, "\n")
+        # print("SNAKE top:", self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH), "\n")
+        # print("SNAKE BOTTOM: ", self.snakeCoordinates[-1][1],"\n" )
+        # print("PREY:", self.prey_coordinates, "\n")
 
-        # if (
-        #             self.snakeCoordinates[-1][1]
-        #             in range(self.prey_coordinates[1], self.prey_coordinates[3])
-        #         ):
-        #     print('FIRST CONDITION')
-        # if (
-        #             (self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH)
-        #             in range(self.prey_coordinates[1], self.prey_coordinates[3])
-        #         ):
-        #     print("SECOND CONDITION")
-
+        
         if self.direction == "Left" and (
             (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
             in range(self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0]+1)
-            # and (
-            #     (
-            #         self.snakeCoordinates[-1][1]
-            #         in range(self.prey_coordinates[1], self.prey_coordinates[3])
-            #     )
-            #     or (
-            #         self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH
-            #         in range(self.prey_coordinates[1], self.prey_coordinates[3])
-            #     )
-            # )
             and (
                 # bottom of snake - WORKING
                 (self.snakeCoordinates[-1][1])
@@ -244,21 +224,61 @@ class Game:
             gameQueue.put({"score": self.score})
             self.createNewPrey()
             print("LEFT WORKS")
-        elif (
-            self.direction == "Right"
-            and self.prey_coordinates[0]
-            in range(self.snakeCoordinates[0][0], self.snakeCoordinates[0][0] + 10)
+
+        elif self.direction == "Right" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(self.snakeCoordinates[0][0] - 10, self.snakeCoordinates[0][0]+1)
             and (
-                self.snakeCoordinates[0][1]
-                in range(self.prey_coordinates[1], self.prey_coordinates[3])
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[0][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[0][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[0][1] - (SNAKE_ICON_WIDTH + 6) )
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                )
             )
         ):
             self.score = self.score + 1
             gameQueue.put({"score": self.score})
             self.createNewPrey()
-        elif (
-            self.direction == "Up"
-            and self.prey_coordinates[3] == self.snakeCoordinates[-1][0]
+            print("RIGHt WORKS")
+        
+        # elif (
+        #     self.direction == "Right"
+        #     and self.prey_coordinates[0]
+        #     in range(self.snakeCoordinates[0][0], self.snakeCoordinates[0][0] + 10)
+        #     and (
+        #         self.snakeCoordinates[0][1]
+        #         in range(self.prey_coordinates[1], self.prey_coordinates[3])
+        #     )
+        # ):
+        #     self.score = self.score + 1
+        #     gameQueue.put({"score": self.score})
+        #     self.createNewPrey()
+        if self.direction == "Left" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0]+1)
+            and (
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[-1][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6) )
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3]+1)
+                )
+            )
         ):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
