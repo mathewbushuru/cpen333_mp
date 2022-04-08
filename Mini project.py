@@ -196,28 +196,16 @@ class Game:
         self.snakeCoordinates.append(newSnakeCoordinates)
         self.snakeCoordinates.pop(0)
 
-        print("SNAKE:", self.snakeCoordinates)
-        print("PREY:", self.prey_coordinates, "\n")
-
-        # if (self.direction == "Left" and self.prey_coordinates[2] == self.snakeCoordinates[-1][0]):
-        #     gameQueue.put({"score": self.score + 1})
-        #     self.createNewPrey()
-        # elif (self.direction == "Right" and self.prey_coordinates[0] == self.snakeCoordinates[-1][0]):
-        #     gameQueue.put({"score": self.score + 1})
-        #     self.createNewPrey()
-        # elif (self.direction == "Up" and self.prey_coordinates[3] == self.snakeCoordinates[-1][0]):
-        #     gameQueue.put({"score": self.score + 1})
-        #     self.createNewPrey()
-        # elif (self.direction == "Down" and self.prey_coordinates[1] == self.snakeCoordinates[-1][0]):
-        #     gameQueue.put({"score": self.score + 1})
-        #     self.createNewPrey()
-        # else:
-        #     return
+        # print("SNAKE:", self.snakeCoordinates)
+        # print("PREY:", self.prey_coordinates, "\n")
+        print('SCORE OLD', self.score)
 
         if self.direction == "Left" and self.prey_coordinates[2] in range(
             self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0]
         ):
-            gameQueue.put({"score": self.score+1})
+            self.score = self.score+1
+            print("NEW SCORE:",self.score)
+            gameQueue.put({"score": self.score})
             self.createNewPrey()
             print("LEFT WPRKS")
         elif (
