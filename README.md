@@ -16,6 +16,7 @@ DONE
 ### GGame class' move method
 
 
+
 ### GGame class' isGameOver method
 
 ### GGame class' createNewPrey method

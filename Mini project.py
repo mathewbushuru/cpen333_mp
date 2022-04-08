@@ -149,9 +149,11 @@ class Game:
         """
         SPEED = 0.15  # speed of snake updates (sec)
         while self.gameNotOver:
+        # for _ in range(50):
             # TODO: complete the method implementation below
-            gameQueue.put( {"move":((495,55),(485,55))} )
-              # remove this line from your implemenation
+            gameQueue.put( {"move": self.snakeCoordinates} )
+            self.move()
+            time.sleep(0.1)
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
         """
@@ -189,23 +191,28 @@ class Game:
         The snake coordinates list (representing its length
         and position) should be correctly updated.
         """
-        NewSnakeCoordinates = self.calculateNewCoordinates()
-        if (self.direction == "Left" and self.prey_coordinates[2] == self.snakeCoordinates[0][0]):
+        newSnakeCoordinates = self.calculateNewCoordinates()
+        # print(self.snakeCoordinates,"\n")
+        self.snakeCoordinates.append(newSnakeCoordinates)
+        self.snakeCoordinates.pop(0)
+
+
+        if (self.direction == "Left" and self.prey_coordinates[2] == self.snakeCoordinates[-1][0]):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Right" and self.prey_coordinates[0] == self.snakeCoordinates[0][0]):
+        elif (self.direction == "Right" and self.prey_coordinates[0] == self.snakeCoordinates[-1][0]):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Up" and self.prey_coordinates[3] == self.snakeCoordinates[0][0]):
+        elif (self.direction == "Up" and self.prey_coordinates[3] == self.snakeCoordinates[-1][0]):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Down" and self.prey_coordinates[1] == self.snakeCoordinates[0][0]):
+        elif (self.direction == "Down" and self.prey_coordinates[1] == self.snakeCoordinates[-1][0]):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
         else:
             return
 
-        self.isGameOver(NewSnakeCoordinates)
+        self.isGameOver(newSnakeCoordinates)
         #self.snakeCoordinates.append()
 
         # TODO: generate new snake coord, if prey captured, add task to the queue for updated score and create
@@ -226,17 +233,35 @@ class Game:
         # TODO: complete the method implementation below
         currentDirection = self.direction
         if currentDirection == "Left":
-            newX = lastX - 5
-            newY = lastY
+            if (lastX>10):
+                newX = lastX - 10
+                newY = lastY
+            else:
+                # newX = 0
+                # newY = lastY
+                newX = WINDOW_WIDTH
+                newY = lastY
         elif currentDirection == "Right":
-            newX = lastX + 5
-            newY = lastY
+            if (lastX < (WINDOW_WIDTH-10)):
+                newX = lastX + 10
+                newY = lastY
+            else:
+                newX = WINDOW_WIDTH 
+                newY = lastY
         elif currentDirection == "Up":
-            newX = lastX
-            newY = lastY - 5
+            if  lastY>10:
+                newX = lastX
+                newY = lastY - 10
+            else:
+                newX = lastX
+                newY = WINDOW_HEIGHT
         elif currentDirection == "Down":
-            newX = lastX
-            newY = lastY + 5
+            if lastY < (290):
+                newX = lastX
+                newY = lastY + 10
+            else:
+                newX = lastX
+                newY = 0
         else:
             return
 

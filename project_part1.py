@@ -225,17 +225,17 @@ class Game:
         # TODO: complete the method implementation below
         currentDirection = self.direction
         if currentDirection == "Left":
-            newX = lastX - 5
+            newX = lastX - 10
             newY = lastY
         elif currentDirection == "Right":
-            newX = lastX + 5
+            newX = lastX + 10
             newY = lastY
         elif currentDirection == "Up":
             newX = lastX
-            newY = lastY - 5
+            newY = lastY - 10
         elif currentDirection == "Down":
             newX = lastX
-            newY = lastY + 5
+            newY = lastY + 10
         else:
             return
 
