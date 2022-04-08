@@ -149,7 +149,7 @@ class Game:
         """
         SPEED = 0.15  # speed of snake updates (sec)
         while self.gameNotOver:
-        ## for _ in range(50):
+            ## for _ in range(50):
             # TODO: complete the method implementation below
             gameQueue.put({"move": self.snakeCoordinates})
             self.move()
@@ -198,21 +198,49 @@ class Game:
 
         # print("SNAKE:", self.snakeCoordinates)
         # print("PREY:", self.prey_coordinates, "\n")
-        print('SCORE OLD', self.score)
 
-        if self.direction == "Left" and self.prey_coordinates[2] in range(
-            self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0]
+        if (
+                    self.snakeCoordinates[-1][1]
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3])
+                ):
+            print('FIRST CONDITION')
+        if (
+                    (self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH)
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3])
+                ):
+            print("SECOND CONDITION")
+        
+        
+
+        if (
+            self.direction == "Left"
+            and self.prey_coordinates[2] in range(self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0])
+            and (
+                (
+                    self.snakeCoordinates[-1][1]
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3])
+                )
+                or (
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3])
+                )
+            )
         ):
-            self.score = self.score+1
-            print("NEW SCORE:",self.score)
+            self.score = self.score + 1
             gameQueue.put({"score": self.score})
             self.createNewPrey()
-            print("LEFT WPRKS")
+            print("LEFT WORKS")
         elif (
             self.direction == "Right"
-            and self.prey_coordinates[0] == self.snakeCoordinates[-1][0]
+            and self.prey_coordinates[0]
+            in range(self.snakeCoordinates[0][0], self.snakeCoordinates[0][0] + 10)
+            and (
+                self.snakeCoordinates[0][1]
+                in range(self.prey_coordinates[1], self.prey_coordinates[3])
+            )
         ):
-            gameQueue.put({"score": self.score + 1})
+            self.score = self.score + 1
+            gameQueue.put({"score": self.score})
             self.createNewPrey()
         elif (
             self.direction == "Up"

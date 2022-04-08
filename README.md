@@ -5,11 +5,11 @@
 
 # part 1
 ## Already done
-- 
+-
 
 ## To Do
 ### Game class' superloop method(the main loop)
-
+DONE
 ### GGame class' calculateNewCoordinates method (implement before doing move)
 DONE
 
