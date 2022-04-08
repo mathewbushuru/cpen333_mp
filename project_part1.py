@@ -2,7 +2,6 @@
 # Name:             Mathew Bushuru
 # Student number:   81262800
 
-# TODO: add details
 # Student 2
 # Name:
 # Student number:
@@ -133,6 +132,7 @@ class Game:
         # note that it is a list of tuples, each being an
         # (x, y) tuple. Initially its size is 5 tuples.
         self.snakeCoordinates = [(495, 55), (485, 55), (475, 55), (465, 55), (455, 55)]
+        # self.snakeCoordinates = [(495, 55), (485, 55), (475, 55), (465, 55), (455, 55),(445, 55),(435, 55),(425, 55),(415, 55),(405, 55),(395, 55),(385, 55)]
         # initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
@@ -149,8 +149,11 @@ class Game:
         """
         SPEED = 0.15  # speed of snake updates (sec)
         while self.gameNotOver:
+            ## for _ in range(50):
             # TODO: complete the method implementation below
-            pass  # remove this line from your implemenation
+            gameQueue.put({"move": self.snakeCoordinates})
+            self.move()
+            time.sleep(SPEED)
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
         """
@@ -188,36 +191,128 @@ class Game:
         The snake coordinates list (representing its length
         and position) should be correctly updated.
         """
-        NewSnakeCoordinates = self.calculateNewCoordinates()
-        if (
-            self.direction == "Left"
-            and self.prey_coordinates[2] == self.snakeCoordinates[0][0]
+        newSnakeCoordinates = self.calculateNewCoordinates()
+        self.snakeCoordinates.append(newSnakeCoordinates)
+        # print(self.snakeCoordinates,"\n")
+        removed_elem = self.snakeCoordinates.pop(0)
+        self.isGameOver(self.snakeCoordinates)
+
+        # print("SNAKE top:", self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH), "\n")
+        # print("SNAKE BOTTOM: ", self.snakeCoordinates[-1][1],"\n" )
+        # print("PREY:", self.prey_coordinates, "\n")
+        # print("SNAKE: ", self.snakeCoordinates,"\n" )
+
+        print(len(self.snakeCoordinates))
+
+        if self.direction == "Left" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(
+                self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1
+            )
+            and (
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[-1][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+            )
         ):
-            gameQueue.put({"score": self.score + 1})
+            self.score = self.score + 1
+            gameQueue.put({"score": self.score})
+            self.snakeCoordinates.insert(0, removed_elem)
             self.createNewPrey()
-        elif (
-            self.direction == "Right"
-            and self.prey_coordinates[0] == self.snakeCoordinates[0][0]
+            print("LEFT WORKS")
+
+        elif self.direction == "Right" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(self.snakeCoordinates[0][0] - 10, self.snakeCoordinates[0][0] + 1)
+            and (
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[0][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[0][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[0][1] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+            )
         ):
-            gameQueue.put({"score": self.score + 1})
+            self.score = self.score + 1
+            gameQueue.put({"score": self.score})
+            self.snakeCoordinates.insert(0, removed_elem)
             self.createNewPrey()
-        elif (
-            self.direction == "Up"
-            and self.prey_coordinates[3] == self.snakeCoordinates[0][0]
+            print("RIGHt WORKS")
+
+        elif self.direction == "Up" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(
+                self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1
+            )
+            and (
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[-1][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+            )
         ):
-            gameQueue.put({"score": self.score + 1})
+            self.score = self.score + 1
+            gameQueue.put({"score": self.score})
+            self.snakeCoordinates.insert(0, removed_elem)
             self.createNewPrey()
-        elif (
-            self.direction == "Down"
-            and self.prey_coordinates[1] == self.snakeCoordinates[0][0]
+            print("UP WORKS")
+
+        elif self.direction == "Down" and (
+            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            in range(
+                self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1
+            )
+            and (
+                # bottom of snake - WORKING
+                (self.snakeCoordinates[-1][1])
+                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                or (
+                    # middle of the snake - working technically
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+                # top of the snake
+                or (
+                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                )
+            )
         ):
-            gameQueue.put({"score": self.score + 1})
+            self.score = self.score + 1
+            gameQueue.put({"score": self.score})
+            self.snakeCoordinates.insert(0, removed_elem)
             self.createNewPrey()
+            print("DOWN WORKS")
         else:
             return
 
-        self.isGameOver(NewSnakeCoordinates)
-        self.snakeCoordinates.append()
+        # self.isGameOver(self.snakeCoordinates)
 
         # TODO: generate new snake coord, if prey captured, add task to the queue for updated score and create
         # TODO: a new prey, check if game should be over
@@ -237,17 +332,35 @@ class Game:
         # TODO: complete the method implementation below
         currentDirection = self.direction
         if currentDirection == "Left":
-            newX = lastX - 10
-            newY = lastY
+            if lastX > 10:
+                newX = lastX - 10
+                newY = lastY
+            else:
+                # newX = 0
+                # newY = lastY
+                newX = 0
+                newY = lastY
         elif currentDirection == "Right":
-            newX = lastX + 10
-            newY = lastY
+            if lastX < (WINDOW_WIDTH - 10):
+                newX = lastX + 10
+                newY = lastY
+            else:
+                newX = WINDOW_WIDTH
+                newY = lastY
         elif currentDirection == "Up":
-            newX = lastX
-            newY = lastY - 10
+            if lastY > 10:
+                newX = lastX
+                newY = lastY - 10
+            else:
+                newX = lastX
+                newY = 0
         elif currentDirection == "Down":
-            newX = lastX
-            newY = lastY + 10
+            if lastY < (290):
+                newX = lastX
+                newY = lastY + 10
+            else:
+                newX = lastX
+                newY = WINDOW_HEIGHT
         else:
             return
 
@@ -261,7 +374,15 @@ class Game:
         If that is the case, it updates the gameNotOver
         field and also adds a "game_over" task to the queue.
         """
-        x, y = snakeCoordinates
+        x, y = snakeCoordinates[-1][0], snakeCoordinates[-1][1]
+
+        if (x == 0) or (x == WINDOW_WIDTH) or (y == 0) or (y == WINDOW_HEIGHT):
+            self.gameNotOver = False
+            gameQueue.put({"game_over": "game_over"})
+        elif (x, y) in (self.snakeCoordinates[:-1]):
+            self.gameNotOver = False
+            gameQueue.put({"game_over": "game_over"})
+
         # TODO: complete the method implementation below
         # if self.snakeCoordinates[0]
 
@@ -281,8 +402,12 @@ class Game:
         x = random.randrange(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
         y = random.randrange(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
         self.prey_coordinates = (x - 5, y - 5, x + 5, y + 5)
-        print(self.prey_coordinates)
         gameQueue.put({"prey": self.prey_coordinates})
+
+        # x = random.randrange(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
+        # y = 50
+        # self.prey_coordinates = (x - 5, y - 5, x + 5, y + 5)
+        # gameQueue.put({"prey": self.prey_coordinates})
 
 
 if __name__ == "__main__":
