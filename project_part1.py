@@ -189,16 +189,28 @@ class Game:
         and position) should be correctly updated.
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
-        if (self.direction == "Left" and self.prey_coordinates[2] == self.snakeCoordinates[0][0]):
+        if (
+            self.direction == "Left"
+            and self.prey_coordinates[2] == self.snakeCoordinates[0][0]
+        ):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Right" and self.prey_coordinates[0] == self.snakeCoordinates[0][0]):
+        elif (
+            self.direction == "Right"
+            and self.prey_coordinates[0] == self.snakeCoordinates[0][0]
+        ):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Up" and self.prey_coordinates[3] == self.snakeCoordinates[0][0]):
+        elif (
+            self.direction == "Up"
+            and self.prey_coordinates[3] == self.snakeCoordinates[0][0]
+        ):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
-        elif (self.direction == "Down" and self.prey_coordinates[1] == self.snakeCoordinates[0][0]):
+        elif (
+            self.direction == "Down"
+            and self.prey_coordinates[1] == self.snakeCoordinates[0][0]
+        ):
             gameQueue.put({"score": self.score + 1})
             self.createNewPrey()
         else:
