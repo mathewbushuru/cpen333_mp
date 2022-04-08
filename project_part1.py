@@ -199,8 +199,8 @@ class Game:
 
         # print("SNAKE top:", self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH), "\n")
         # print("SNAKE BOTTOM: ", self.snakeCoordinates[-1][1],"\n" )
-        # print("PREY:", self.prey_coordinates, "\n")
-        # print("SNAKE: ", self.snakeCoordinates,"\n" )
+        print("PREY:", self.prey_coordinates, "")
+        print("SNAKE: ", self.snakeCoordinates,"" )
 
         print(len(self.snakeCoordinates))
 
@@ -233,19 +233,19 @@ class Game:
 
         elif self.direction == "Right" and (
             (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
-            in range(self.snakeCoordinates[0][0] - 10, self.snakeCoordinates[0][0] + 1)
+            in range(self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1)
             and (
                 # bottom of snake - WORKING
-                (self.snakeCoordinates[0][1])
+                (self.snakeCoordinates[-1][1])
                 in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
                 or (
                     # middle of the snake - working technically
-                    self.snakeCoordinates[0][1] - SNAKE_ICON_WIDTH / 2
+                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
                     in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
                 )
                 # top of the snake
                 or (
-                    (self.snakeCoordinates[0][1] - (SNAKE_ICON_WIDTH + 6))
+                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
                     in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
                 )
             )
@@ -257,23 +257,23 @@ class Game:
             print("RIGHt WORKS")
 
         elif self.direction == "Up" and (
-            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            (self.prey_coordinates[1] + self.prey_coordinates[3]) / 2
             in range(
-                self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1
+                self.snakeCoordinates[-1][1] - 10, self.snakeCoordinates[-1][1] + 1
             )
             and (
-                # bottom of snake - WORKING
-                (self.snakeCoordinates[-1][1])
-                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                # left of snake - WORKING
+                (self.snakeCoordinates[-1][0])
+                in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 or (
                     # middle of the snake - working technically
-                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
-                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                    self.snakeCoordinates[-1][0] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 )
-                # top of the snake
+                # Right of the snake
                 or (
-                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
-                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                    (self.snakeCoordinates[-1][0] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 )
             )
         ):
@@ -284,23 +284,23 @@ class Game:
             print("UP WORKS")
 
         elif self.direction == "Down" and (
-            (self.prey_coordinates[2] + self.prey_coordinates[0]) / 2
+            (self.prey_coordinates[1] + self.prey_coordinates[3]) / 2
             in range(
-                self.snakeCoordinates[-1][0] - 10, self.snakeCoordinates[-1][0] + 1
+                self.snakeCoordinates[-1][1], self.snakeCoordinates[-1][1] + 11
             )
             and (
-                # bottom of snake - WORKING
-                (self.snakeCoordinates[-1][1])
-                in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                # middle of snake 
+                (self.snakeCoordinates[-1][0])
+                in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 or (
-                    # middle of the snake - working technically
-                    self.snakeCoordinates[-1][1] - SNAKE_ICON_WIDTH / 2
-                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                    # left of the snake - 
+                    self.snakeCoordinates[-1][0] - SNAKE_ICON_WIDTH / 2
+                    in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 )
-                # top of the snake
+                # right of the snake
                 or (
-                    (self.snakeCoordinates[-1][1] - (SNAKE_ICON_WIDTH + 6))
-                    in range(self.prey_coordinates[1], self.prey_coordinates[3] + 1)
+                    (self.snakeCoordinates[-1][0] - (SNAKE_ICON_WIDTH + 6))
+                    in range(self.prey_coordinates[0], self.prey_coordinates[2] + 1)
                 )
             )
         ):
