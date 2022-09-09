@@ -1,6 +1,6 @@
 # Student 1
 # Name:             Mathew Bushuru
-# Student number:   81262800
+# Student number:  
 
 # Student 2
 # Name:
